@@ -29,6 +29,7 @@ out = nans( [10,5,10,20] );
 console.log( '10x5x10x20:' );
 console.log( JSON.stringify( out ) );
 console.log( '\n' );
+// Note that `NaN` values are stringified as `null`.
 
 
 // ---
