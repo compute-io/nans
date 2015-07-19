@@ -1,8 +1,8 @@
-nans
+NaNs
 ===
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependencies][dependencies-image]][dependencies-url]
 
-> Creates a NaN-filled matrix or array.
+> Creates a NaN-filled [matrix](https://github.com/dstructs/matrix) or array.
 
 
 ## Installation
@@ -17,18 +17,114 @@ For use in the browser, use [browserify](https://github.com/substack/node-browse
 ## Usage
 
 ``` javascript
-var foo = require( 'compute-nans' );
+var nans = require( 'compute-nans' );
 ```
 
-#### foo( arr )
+#### nans( dims[, opts] )
 
-What does this function do?
+Creates a NaN-filled [`matrix`](https://github.com/dstructs/matrix) or [`array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array). The `dims` argument may either be a positive `integer` specifying a `length` or an `array` of positive `integers` specifying dimensions.
+
+``` javascript
+var out;
+
+out = nans( 5 );
+// returns [ NaN, NaN, NaN, NaN, NaN ];
+
+out = nans( [2,1,2] );
+// returns [ [ [NaN,NaN] ], [ [NaN,NaN] ] ]
+```
+
+The function accepts the following `options`:
+
+*	__dtype__: output data type. The following `dtypes` are accepted:
+
+*	`float32`
+*	`float64`
+*	`generic` (default)
+
+By default, the output data structure is a generic [`array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array). To output a [`typed array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays) or [`matrix`](https://github.com/dstructs/matrix), set the `dtype` option.
+
+``` javascript
+var out;
+
+out = nans( 5, {
+	'float32'
+});
+// returns Float32Array( [NaN,NaN,NaN,NaN,NaN] );
+
+out = nans( [3,2], {
+	'float64'
+});
+/*
+	[ NaN NaN
+	  NaN NaN
+	  NaN NaN ]
+*/
+```
+
+__Notes__:
+*	Currently, for more than `2` dimensions, the function outputs a __generic__ `array` and ignores any specified `dtype`.
+
+	``` javascript
+	var out = nans( [2,1,3], {
+		'float32'
+	});
+	// returns [ [ [NaN,NaN,NaN] ], [ [NaN,NaN,NaN] ] ]
+	```
+*	Integer [`arrays`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays) are __not__ supported. In JavaScript, [`NaN`](https://en.wikipedia.org/wiki/NaN) values are only represented in floating-point storage formats ([IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point)).
+
+
+#### nans.compile( dims )
+
+Compiles a `function` for creating NaN-filled [`arrays`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) having specified dimensions.
+
+``` javascript
+var fcn, out;
+
+fcn = nans.compile( [2,1,3] );
+
+out = fcn();
+// returns [ [ [NaN,NaN,NaN] ], [ [NaN,NaN,NaN] ] ]
+
+out = fcn();
+// returns [ [ [NaN,NaN,NaN] ], [ [NaN,NaN,NaN] ] ]
+```
+
+__Notes__:
+*	When repeatedly creating [`arrays`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) having the same shape, creating a customized `nans` function will provide performance benefits.
+
+
 
 
 ## Examples
 
 ``` javascript
-var foo = require( 'compute-nans' );
+var nans = require( 'compute-nans' ),
+	out;
+
+// Plain arrays...
+
+// 1x10:
+out = nans( 10 );
+
+// 2x1x3:
+out = nans( [2,1,3] );
+
+// 5x5x5:
+out = nans( [5,5,5] );
+
+// 10x5x10x20:
+out = nans( [10,5,10,20] );
+
+// Typed arrays...
+out = nans( 10, {
+	'dtype': 'float32'
+});
+
+// Matrices...
+out = nans( [3,2], {
+	'dtype': 'float64'
+});
 ```
 
 To run the example code from the top-level application directory,
