@@ -38,9 +38,9 @@ The function accepts the following `options`:
 
 *	__dtype__: output data type. The following `dtypes` are accepted:
 
-*	`float32`
-*	`float64`
-*	`generic` (default)
+	-	`float32`
+	-	`float64`
+	-	`generic` (default)
 
 By default, the output data structure is a generic [`array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array). To output a [`typed array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays) or [`matrix`](https://github.com/dstructs/matrix), set the `dtype` option.
 
