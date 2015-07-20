@@ -63,28 +63,6 @@ describe( 'validate', function tests() {
 		}
 	});
 
-	it( 'should return an error if provided a dtype option which is not a string primitive', function test() {
-		var values, err;
-
-		values = [
-			5,
-			true,
-			undefined,
-			null,
-			NaN,
-			[],
-			{},
-			function(){}
-		];
-
-		for ( var i = 0; i < values.length; i++ ) {
-			err = validate( {}, {
-				'dtype': values[ i ]
-			});
-			assert.isTrue( err instanceof TypeError );
-		}
-	});
-
 	it( 'should return an error if provided an unsupported dtype option', function test() {
 		var values, err;
 
