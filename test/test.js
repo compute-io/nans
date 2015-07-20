@@ -80,31 +80,6 @@ describe( 'compute-nans', function tests() {
 		}
 	});
 
-	it( 'should throw an error if provided an unrecognized/unsupported data type option', function test() {
-		var values = [
-			'int8',
-			'uint8',
-			'uint8_clamped',
-			'int16',
-			'uint16',
-			'int32',
-			'uint32',
-			'beep',
-			'boop'
-		];
-
-		for ( var i = 0; i < values.length; i++ ) {
-			expect( badValue( values[i] ) ).to.throw( Error );
-		}
-		function badValue( value ) {
-			return function() {
-				nans( [10], {
-					'dtype': value
-				});
-			};
-		}
-	});
-
 	it( 'should return a NaN-filled matrix', function test() {
 		var actual, expected;
 
@@ -155,22 +130,6 @@ describe( 'compute-nans', function tests() {
 		expected = [ [[NaN,NaN,NaN]], [[NaN,NaN,NaN]] ];
 
 		assert.deepEqual( actual, expected );
-	});
-
-	it( 'should support fast elements', function test() {
-		var actual, i;
-
-		this.timeout( 0 );
-
-		actual = nans( [100000] );
-		for ( i = 0; i < actual.length; i++ ) {
-			assert.isOk( actual[ i ] !== actual[ i ] );
-		}
-
-		actual = nans( [100000,2] );
-		for ( i = 0; i < actual.length; i++ ) {
-			assert.deepEqual( actual[ i ], [NaN,NaN] );
-		}
 	});
 
 	it( 'should, until ndarrays are supported, ignore the `dtype` option and return a generic multidimensional array for >2 dimensions', function test() {

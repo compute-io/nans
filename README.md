@@ -48,12 +48,12 @@ By default, the output data structure is a generic [`array`](https://developer.m
 var out;
 
 out = nans( 5, {
-	'float32'
+	'dtype': 'float32'
 });
 // returns Float32Array( [NaN,NaN,NaN,NaN,NaN] );
 
 out = nans( [3,2], {
-	'float64'
+	'dtype': 'float64'
 });
 /*
 	[ NaN NaN
@@ -67,7 +67,7 @@ __Notes__:
 
 	``` javascript
 	var out = nans( [2,1,3], {
-		'float32'
+		'dtype': 'float32'
 	});
 	// returns [ [ [NaN,NaN,NaN] ], [ [NaN,NaN,NaN] ] ]
 	```
